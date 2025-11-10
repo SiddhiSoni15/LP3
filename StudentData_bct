@@ -1,0 +1,65 @@
+StudentData_bct
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/**
+ * @title StudentData
+ * @dev Demonstrates use of structures, arrays, and fallback/receive functions.
+ */
+contract StudentData {
+    // Structure to hold student information
+    struct Student {
+        uint256 id;
+        string name;
+        uint8 age;
+        string course;
+    }
+
+    // Dynamic array to store students
+    Student[] private students;
+
+    // Event to log when a student is added
+    event StudentAdded(uint256 id, string name, uint8 age, string course);
+
+    /**
+     * @dev Add a new student record.
+     */
+    function addStudent(
+        uint256 _id,
+        string memory _name,
+        uint8 _age,
+        string memory _course
+    ) external {
+        students.push(Student(_id, _name, _age, _course));
+        emit StudentAdded(_id, _name, _age, _course);
+    }
+
+    /**
+     * @dev Retrieve a student’s details by index.
+     */
+    function getStudent(
+        uint256 index
+    )
+        external
+        view
+        returns (uint256 id, string memory name, uint8 age, string memory course)
+    {
+        require(index < students.length, "Invalid index");
+        Student memory s = students[index];
+        return (s.id, s.name, s.age, s.course);
+    }
+
+    /**
+     * @dev Returns total number of students stored.
+     */
+    function getTotalStudents() external view returns (uint256) {
+        return students.length;
+    }
+
+    /**
+     * @dev Handles accidental ETH transfers to the contract.
+     */
+    receive() external payable {}
+    fallback() external payable {}
+}
