@@ -66,9 +66,28 @@ contract BankAccount {
 
 
 
+theory 
+A Smart Contract is a self-executing piece of code stored on the Ethereum blockchain, which automatically enforces and executes the terms of an agreement.
+In this experiment, we design a Bank Account smart contract that allows a customer to deposit, withdraw, and check balance securely.
+Smart contracts are written in Solidity, a contract-oriented programming language for Ethereum.
+The contract stores each user’s balance in a mapping data structure.
+When users deposit funds, their balances increase; when they withdraw, the contract checks if they have sufficient funds before transferring the amount.
+The contract runs on a test network (like Sepolia, Goerli, or Remix’s JavaScript VM) for development and testing without real Ether.
+Each function call and transaction is recorded on the blockchain, ensuring transparency and immutability.
+This simple banking contract demonstrates the foundational concepts of decentralized finance (DeFi) and Ethereum state management.
 
+Concept	Description
+msg.sender	Address of the account calling the function
+msg.value	Amount of Ether sent in the transaction
+payable	    Keyword that allows a function to receive Ether
+mapping	    Stores key-value pairs (address → balance)
+require()	Ensures conditions are met before execution
 
-
+The Bank Account Smart Contract was successfully implemented and tested on the Ethereum test network using Remix IDE.
+It allows customers to securely deposit, withdraw, and check their balances on the blockchain.
+The contract ensures that no user can withdraw more than their balance using the require() condition.
+Since all operations are executed on a decentralized blockchain, the system provides transparency, immutability, and security.
+This experiment demonstrates the basic functionality of financial transactions using smart contracts in decentralized applications (DApps).
 
 
 
