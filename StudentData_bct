@@ -63,3 +63,39 @@ contract StudentData {
     receive() external payable {}
     fallback() external payable {}
 }
+
+
+
+theory
+In Ethereum, a smart contract is a self-executing program that runs on the blockchain, allowing storage and retrieval of structured data securely.
+This experiment demonstrates the creation of a Student Record Management System using Solidity constructs such as Structures, Arrays, and a Fallback function.
+A structure (struct) is used to define the student data type with fields like name, roll number, and marks.
+An array is used to store multiple student records on the blockchain.
+The fallback() function in Solidity is a special function that executes automatically when Ether is sent to the contract or when an undefined function is called.
+It ensures the contract can safely handle unexpected transactions and log them.
+The contract is deployed on an Ethereum test network (Remix VM or Sepolia), and each operation (adding data, calling fallback) consumes gas, which can be observed in Remix.
+This experiment introduces how data structures and blockchain storage combine to create decentralized applications (DApps).
+
+Algorithm
+Define a Student structure containing:
+name (string)
+rollNumber (uint)
+marks (uint).
+Create an array to store multiple student records.
+Define a function addStudent() to add new student data to the array.
+Define a function getStudent() to retrieve student data by index.
+Implement a fallback() function to handle unexpected transactions or Ether transfers.
+Deploy the contract on Remix IDE (using JavaScript VM or Sepolia).
+Observe Gas usage and Transaction fee for adding and retrieving student records
+
+The StudentData Smart Contract was successfully created and deployed using Solidity.
+It demonstrates the use of Structures (for data organization), Arrays (for dynamic storage), and Fallback functions (for handling unexpected calls).
+The fallback function was triggered when Ether was sent to the contract or an undefined function was called.
+Gas consumption was observed for different operations — storage and function calls consumed more gas compared to read-only calls.
+This experiment illustrates how smart contracts manage structured data and react to external interactions securely on the Ethereum blockchain.
+
+Operation	    Gas Used	Remarks
+Deploy Contract	~148,000	Storage allocation
+addStudent()	~45,000	    Write to blockchain
+getStudent()	0 (view)	Read-only call
+fallback()	    ~22,000	    Default function triggered
