@@ -1,89 +1,61 @@
-# n-Queens Problem Using Backtracking
-
 def print_board(board):
     for row in board:
-        print(" ".join(str(x) for x in row))
-    print()
+        print(" ".join(row))
+    print("\n")
+
 
 def is_safe(board, row, col, n):
-    # Check same row (any column)
-    for j in range(n):
-        if j != col and board[row][j] == 1:
+    # Check this column on upper side
+    for i in range(row):
+        if board[i][col] == 'Q':
             return False
 
-    # Check same column (any row)
-    for i in range(n):
-        if i != row and board[i][col] == 1:
-            return False
-
-    # Check all four diagonal directions
-    # up-left
-    i, j = row - 1, col - 1
+    # Check upper left diagonal
+    i, j = row, col
     while i >= 0 and j >= 0:
-        if board[i][j] == 1:
+        if board[i][j] == 'Q':
             return False
-        i -= 1; j -= 1
+        i -= 1
+        j -= 1
 
-    # up-right
-    i, j = row - 1, col + 1
+    # Check upper right diagonal
+    i, j = row, col
     while i >= 0 and j < n:
-        if board[i][j] == 1:
+        if board[i][j] == 'Q':
             return False
-        i -= 1; j += 1
-
-    # down-left
-    i, j = row + 1, col - 1
-    while i < n and j >= 0:
-        if board[i][j] == 1:
-            return False
-        i += 1; j -= 1
-
-    # down-right
-    i, j = row + 1, col + 1
-    while i < n and j < n:
-        if board[i][j] == 1:
-            return False
-        i += 1; j += 1
+        i -= 1
+        j += 1
 
     return True
 
-def solve_nqueens(board, col, n):
-    if col >= n:
+
+def solve_n_queens(board, row, n):
+    # Base case: if all queens are placed
+    if row == n:
         print_board(board)
-        return True
+        return True  # Found one solution
 
-    for row in range(n):
-        # If a queen is already placed in this column at this row, skip placing again
-        if board[row][col] == 1:
-            # move to next column
-            if solve_nqueens(board, col + 1, n):
-                return True
-            # if that didn't lead to a solution, continue trying other rows in this column
-            continue
-
+    res = False
+    # Try placing queen in all columns of current row
+    for col in range(n):
         if is_safe(board, row, col, n):
-            board[row][col] = 1
-            if solve_nqueens(board, col + 1, n):
-                return True
-            board[row][col] = 0  # Backtrack
+            board[row][col] = 'Q'  # Place queen
+            res = solve_n_queens(board, row + 1, n) or res
+            board[row][col] = '.'  # Backtrack
 
-    return False
+    return res
 
-# Driver Code
-n = int(input("Enter the size of the board (n): "))
-first_row = int(input(f"Enter row index for first queen (0 to {n-1}): "))
-first_col = int(input(f"Enter column index for first queen (0 to {n-1}): "))
 
-# Initialize board
-board = [[0 for _ in range(n)] for _ in range(n)]
-board[first_row][first_col] = 1  # Place first queen
+def n_queens(n):
+    board = [['.' for _ in range(n)] for _ in range(n)]
+    if not solve_n_queens(board, 0, n):
+        print("No solution exists")
 
-# Solve remaining queens starting from column 0 (skips already placed queen)
-if solve_nqueens(board, 0, n):
-    print("\nFinal n-Queens Matrix:")
-    print_board(board)
-else:
-    print("\nNo solution exists with the given first queen position.")
+
+# ---------- MAIN CODE ----------
+if __name__ == "__main__":
+    n = int(input("Enter the number of queens: "))
+    n_queens(n)
 
 
 # The n-Queens problem is a classic example of backtracking — a constraint satisfaction problem.
